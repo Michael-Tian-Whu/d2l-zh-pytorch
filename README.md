@@ -1,3 +1,10 @@
+<!--
+ * @Author: WHURS-THC
+ * @Date: 2022-10-27 10:42:59
+ * @LastEditTime: 2022-11-03 14:58:37
+ * @Description: 
+ * 
+-->
 # d2l-zh-pytorch
 李沐《动手深度学习》_THC编辑
 ========================
@@ -37,3 +44,47 @@
 ## 参考
  - [chapter_references/zreferences](chapter_references/zreferences.ipynb)
 
+## 批注总结
+### 3.5
+
+`data.DataLoader`返回类型不是`iteration`*迭代器*而是`torch.utils.data.dataloader.DataLoader` *可迭代的对象* 像是list  
+因此需要先`iter()`转换为`iteration`
+
+### 3.6
+
+小批量中每个样本是一行，即`输入(N,dim1)->输出(N,dim2)`
+
+当网络中有`dropout`/`batchnorm`的时候,需要使用`net.train()`&`net.eval()``net.eval()`会关掉二者
+  1. `dp` 由于网络已经训练完毕，参数都是固定的，因此每个min-batch的均值和方差都是无需再调整的，因此直接运用所有batch的均值和方差
+  2. `bn` 测试利用到了所有网络连接，即不进行随机舍弃神经元
+
+参数`*`代表tuple类型，不限制数量；`**`代表dict 必须key=value
+
+### 4.1
+
+即使是网络只有一个隐藏层，给定足够的神经元和正确的权重，
+我们可以对任意函数建模
+
+使用ReLU的原因是，它求导表现得特别好：要么让参数消失，要么让参数通过。
+这使得优化表现得更好，并且ReLU减轻了困扰以往神经网络的梯度消失问题
+
+### 4.2
+
+`torch.optim.SGD(net.parameters(), lr=lr)`优化器必须需要使用`para.list()`而非`tensor`
+
+### 4.4
+
+将模型在训练数据上拟合的比在潜在分布中更接近的现象称为*过拟合*（overfitting）
+用于对抗过拟合的技术称为*正则化*（regularization）
+
+*训练误差*（training error）是指，模型在训练数据集上计算得到的误差。
+ *泛化误差*（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望.
+
+`欠拟合`训练误差和验证误差都很严重，但它们之间仅有一点差距。
+`过拟合`训练误差明显低于验证误差。
+1. 模型越复杂越容易过拟合
+2. 数据集约小越容易过拟合
+
+### 4.6
+
+`nn.CrossEntropyLoss(reduction='none')``reduction='none'`表示不取平均了,默认会取minibacth平均，（n,1）->(1,1)
