@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-03 14:58:37
+ * @LastEditTime: 2022-11-09 16:46:38
  * @Description: 
  * 
 -->
@@ -88,3 +88,16 @@
 ### 4.6
 
 `nn.CrossEntropyLoss(reduction='none')``reduction='none'`表示不取平均了,默认会取minibacth平均，（n,1）->(1,1)
+
+### 4.8
+
+$$
+\text{方差}
+$$
+$$
+\text{定义\ }Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2
+$$
+$$
+\text{计算\ }Var\left( X \right) =\int{f_X\left( x \right) \left( X-E\left( X \right) \right) ^2dx}
+$$
+
