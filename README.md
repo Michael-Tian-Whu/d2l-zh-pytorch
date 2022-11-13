@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-09 16:46:38
+ * @LastEditTime: 2022-11-12 21:32:34
  * @Description: 
  * 
 -->
@@ -77,8 +77,7 @@
 将模型在训练数据上拟合的比在潜在分布中更接近的现象称为*过拟合*（overfitting）
 用于对抗过拟合的技术称为*正则化*（regularization）
 
-*训练误差*（training error）是指，模型在训练数据集上计算得到的误差。
- *泛化误差*（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望.
+*训练误差*（training error）是指，模型在训练数据集上计算得到的误差。*泛化误差*（generalization error）是指，模型应用在同样从原始样本的分布中抽取的无限多数据样本时，模型误差的期望.
 
 `欠拟合`训练误差和验证误差都很严重，但它们之间仅有一点差距。
 `过拟合`训练误差明显低于验证误差。
@@ -91,13 +90,26 @@
 
 ### 4.8
 
-$$
+$
 \text{方差}
-$$
-$$
-\text{定义\ }Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2
-$$
-$$
+$
+$
+Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2
+$
+$
 \text{计算\ }Var\left( X \right) =\int{f_X\left( x \right) \left( X-E\left( X \right) \right) ^2dx}
-$$
+$
 
+`tensor.detach()`
+ 从计算图中脱离出来，返回一个新的tensor，新的tensor和原tensor共享数据内存，（这也就意味着修改一个tensor的值，另外一个也会改变），但是不涉及梯度计算。*在从tensor转换成为numpy的时候，如果转换前面的tensor在计算图里面（requires_grad = True），那么这个时候只能先进行detach操作才能转换成为numpy*
+
+K折交叉验证用于选取超参数；之后再在测试集进行测试。
+
+### 5.1
+
+
+`nn`和`nn.function`中定义的函数如`nn.ReLU`和`F.relu`的差别
+
+1. 前者是类，封装了后者，前者必须先定义，再调用对象
+2. 官方建议：具有学习参数的如`conv2d,linear,batchnorm`和`dropout`采用前者；没有学习参数的如`activation func,maxpool`采用后者或前者；
+3. 在使用的时候，建议在`__init__`中使用前者定义好，在`forward`中调用
