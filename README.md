@@ -90,7 +90,7 @@
 
 ### 4.8
 
-$ \text{方差} $
+$\text{方差}$
 $
 Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2
 $
