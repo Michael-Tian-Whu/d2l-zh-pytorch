@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-12 21:32:34
+ * @LastEditTime: 2022-11-13 14:18:11
  * @Description: 
  * 
 -->
@@ -113,3 +113,16 @@ K折交叉验证用于选取超参数；之后再在测试集进行测试。
 1. 前者是类，封装了后者，前者必须先定义，再调用对象
 2. 官方建议：具有学习参数的如`conv2d,linear,batchnorm`和`dropout`采用前者；没有学习参数的如`activation func,maxpool`采用后者或前者；
 3. 在使用的时候，建议在`__init__`中使用前者定义好，在`forward`中调用
+
+### 5.2
+
+pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因此权重矩阵是在输出时是转置了的
+
+*`OrderedDict`为有序`dict`类，可以通过下标访问，但不可迭代，但和`dict`一样都可以通过`items()`方法转化为可迭代的`dict_items`类，进行for循环访问*
+
+`net.state_dict()`返回全网络的`OrderedDict` 下标`weight``bias`等   
+`net[n].state_dict()`返回第n层的全网络的`OrderedDict` 下标`n.weight``n.bias`等
+
+`net[n]`为第n层的`nn.module`类的网络，包括`linear``relu`  
+`net[n].bias/weight`返回该层的`nn.parameter.Parameter`  
+`net[n].bias/weight.data`进一步返回`tensor`值
