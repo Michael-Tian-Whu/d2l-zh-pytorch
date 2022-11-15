@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-13 14:27:00
+ * @LastEditTime: 2022-11-13 17:59:12
  * @Description: 
  * 
 -->
@@ -90,7 +90,8 @@
 
 ### 4.8
 
-$\text{方差\ }Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2$
+$\text{方差\ }Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2$  
+
 $\text{计算\ }Var\left( X \right) =\int{f_X\left( x \right) \left( X-E\left( X \right) \right) ^2dx}$
 
 `tensor.detach()`
@@ -116,6 +117,7 @@ pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因�
 `net.state_dict()`返回全网络的`OrderedDict` 下标`weight``bias`等   
 `net[n].state_dict()`返回第n层的全网络的`OrderedDict` 下标`n.weight``n.bias`等
 
+**当网络类别是`nn.Sequential`类别时候，可以使用如下方式访问**  
 `net[n]`为第n层的`nn.module`类的网络，包括`linear``relu`  
 `net[n].bias/weight`返回该层的`nn.parameter.Parameter`  
 `net[n].bias/weight.data`进一步返回`tensor`值
