@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-13 17:59:12
+ * @LastEditTime: 2022-11-15 17:12:57
  * @Description: 
  * 
 -->
@@ -121,3 +121,19 @@ pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因�
 `net[n]`为第n层的`nn.module`类的网络，包括`linear``relu`  
 `net[n].bias/weight`返回该层的`nn.parameter.Parameter`  
 `net[n].bias/weight.data`进一步返回`tensor`值
+
+### 6.4
+
+**`torch.cat()`与`torch.stack()`的区别**  
+`cat()`在dim=n维度上进行拼接，其他维度必须相同  
+`stack()`在新的dim=n维度上进行堆叠，所有维度必须相同
+
+**`bias`的数量**  
+`bias`和输出有关，即`bias`的数量等于输出通道的数量，因为卷积操作的会在输入数量的通道上进行求和，因此即使在每个输入通道上都有一个偏置，求和后相当于输出通道上了。
+
+### 6.6
+
+**`with torch.no_grad()`的作用**  
+`model.eval()`依旧会生成计算图，占用显存，只是不使用计算图来进行反向传播  
+`with torch.no_grad()`结构中不构建计算图，不跟踪梯度，节约显存  
+因此在测试评估时使用`with torch.no_grad()`
