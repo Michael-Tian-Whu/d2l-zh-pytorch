@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-20 18:13:28
+ * @LastEditTime: 2022-11-22 17:06:59
  * @Description: 
  * 
 -->
@@ -110,15 +110,17 @@ K折交叉验证用于选取超参数；之后再在测试集进行测试。
 
 ### 5.2
 
+**nn.Linear权重矩阵的转置**  
 pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因此权重矩阵是在输出时是转置了的
 
+**net.state_dict()**  
 *`OrderedDict`为有序`dict`类，可以通过下标访问，但不可迭代，但和`dict`一样都可以通过`items()`方法转化为可迭代的`dict_items`类，进行for循环访问*
 
-`net.state_dict()`返回全网络的`OrderedDict` 下标`weight``bias`等   
+`net.state_dict()`返回全网络的`OrderedDict` 下标`weight` `bias`等  
 `net[n].state_dict()`返回第n层的全网络的`OrderedDict` 下标`n.weight``n.bias`等
 
 **当网络类别是`nn.Sequential`类别时候，可以使用如下方式访问**  
-`net[n]`为第n层的`nn.module`类的网络，包括`linear``relu`  
+`net[n]`为第n层的`nn.module`类的网络，包括`linear` `relu`  
 `net[n].bias/weight`返回该层的`nn.parameter.Parameter`  
 `net[n].bias/weight.data`进一步返回`tensor`值
 
@@ -161,3 +163,16 @@ $$n/s$$
 在多于2维的张量上做广播，广播的向量需要保持维度。
 `mean = X.mean(dim=(0, 2, 3), keepdim=True)`  
 
+### 8.2 language-models
+
+**`@property`**  
+`@property`装饰器会将方法转换为相同名称的只读属性,只能通过属性的方式来调用，即不能带括号。  
+可以与所定义的属性配合使用，这样可以防止属性被修改。
+
+```python
+  @property
+  def token_freqs(self):
+      return self._token_freqs
+```
+
+这样类中定义的不建议访问的私有属性`_token_freqs`就变成了`token_freqs`，后者可以正常访问，但是却无法修改，这样就起到了保护的作用。  
