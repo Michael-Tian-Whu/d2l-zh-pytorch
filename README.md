@@ -1,11 +1,12 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-22 17:06:59
+ * @LastEditTime: 2022-11-28 11:35:16
  * @Description: 
  * 
 -->
 # d2l-zh-pytorch
+
 李沐《动手深度学习》_THC编辑
 ========================
 <!-- 
@@ -17,34 +18,36 @@
 <!-- :begin_tab:toc
 :end_tab: -->
 ## *前言*
- - [chapter_preface/index](chapter_preface/index.ipynb)
- - [chapter_installation/index](chapter_installation/index.ipynb)
- - [chapter_notation/index](chapter_notation/index.ipynb)
 
+- [chapter_preface/index](chapter_preface/index.ipynb)
+- [chapter_installation/index](chapter_installation/index.ipynb)
+- [chapter_notation/index](chapter_notation/index.ipynb)
 
 ## *正文*
- - [chapter_introduction/index](chapter_introduction/index.ipynb)
- - [chapter_preliminaries/index](chapter_preliminaries/index.ipynb)
- - [chapter_linear-networks/index](chapter_linear-networks/index.ipynb)
- - [chapter_multilayer-perceptrons/index](chapter_multilayer-perceptrons/index.ipynb)
- - [chapter_deep-learning-computation/index](chapter_deep-learning-computation/index.ipynb)
- - [chapter_convolutional-neural-networks/index](chapter_convolutional-neural-networks/index.ipynb)
- - [chapter_convolutional-modern/index](chapter_convolutional-modern/index.ipynb)
- - [chapter_recurrent-neural-networks/index](chapter_recurrent-neural-networks/index.ipynb)
- - [chapter_recurrent-modern/index](chapter_recurrent-modern/index.ipynb)
- - [chapter_attention-mechanisms/index](chapter_attention-mechanisms/index.ipynb)
- - [chapter_optimization/index](chapter_optimization/index.ipynb)
- - [chapter_computational-performance/index](chapter_computational-performance/index.ipynb)
- - [chapter_computer-vision/index](chapter_computer-vision/index.ipynb)
- - [chapter_natural-language-processing-pretraining/index](chapter_natural-language-processing-pretraining/index.ipynb)
- - [chapter_natural-language-processing-applications/index](chapter_natural-language-processing-applications/index.ipynb)
- - [chapter_appendix-tools-for-deep-learning/index](chapter_appendix-tools-for-deep-learning/index.ipynb)
 
+- [chapter_introduction/index](chapter_introduction/index.ipynb)
+- [chapter_preliminaries/index](chapter_preliminaries/index.ipynb)
+- [chapter_linear-networks/index](chapter_linear-networks/index.ipynb)
+- [chapter_multilayer-perceptrons/index](chapter_multilayer-perceptrons/index.ipynb)
+- [chapter_deep-learning-computation/index](chapter_deep-learning-computation/index.ipynb)
+- [chapter_convolutional-neural-networks/index](chapter_convolutional-neural-networks/index.ipynb)
+- [chapter_convolutional-modern/index](chapter_convolutional-modern/index.ipynb)
+- [chapter_recurrent-neural-networks/index](chapter_recurrent-neural-networks/index.ipynb)
+- [chapter_recurrent-modern/index](chapter_recurrent-modern/index.ipynb)
+- [chapter_attention-mechanisms/index](chapter_attention-mechanisms/index.ipynb)
+- [chapter_optimization/index](chapter_optimization/index.ipynb)
+- [chapter_computational-performance/index](chapter_computational-performance/index.ipynb)
+- [chapter_computer-vision/index](chapter_computer-vision/index.ipynb)
+- [chapter_natural-language-processing-pretraining/index](chapter_natural-language-processing-pretraining/index.ipynb)
+- [chapter_natural-language-processing-applications/index](chapter_natural-language-processing-applications/index.ipynb)
+- [chapter_appendix-tools-for-deep-learning/index](chapter_appendix-tools-for-deep-learning/index.ipynb)
 
 ## 参考
- - [chapter_references/zreferences](chapter_references/zreferences.ipynb)
+
+- [chapter_references/zreferences](chapter_references/zreferences.ipynb)
 
 ## 批注总结
+
 ### 3.5
 
 `data.DataLoader`返回类型不是`iteration`*迭代器*而是`torch.utils.data.dataloader.DataLoader` *可迭代的对象* 像是list  
@@ -55,7 +58,8 @@
 小批量中每个样本是一行，即`输入(N,dim1)->输出(N,dim2)`
 
 当网络中有`dropout`/`batchnorm`的时候,需要使用`net.train()`&`net.eval()``net.eval()`会关掉二者
-  1. `dp` 由于网络已经训练完毕，参数都是固定的，因此每个min-batch的均值和方差都是无需再调整的，因此直接运用所有batch的均值和方差
+
+  1. `dp` 由于网络已经训练完毕，参数都是固定的，因此每个min-batch的均值和方差都是无需再调整的，因此直接运用所有batch的均值和方差  
   2. `bn` 测试利用到了所有网络连接，即不进行随机舍弃神经元
 
 参数`*`代表tuple类型，不限制数量；`**`代表dict 必须key=value
@@ -81,6 +85,7 @@
 
 `欠拟合`训练误差和验证误差都很严重，但它们之间仅有一点差距。
 `过拟合`训练误差明显低于验证误差。
+
 1. 模型越复杂越容易过拟合
 2. 数据集约小越容易过拟合
 
@@ -101,7 +106,6 @@ K折交叉验证用于选取超参数；之后再在测试集进行测试。
 
 ### 5.1
 
-
 `nn`和`nn.function`中定义的函数如`nn.ReLU`和`F.relu`的差别
 
 1. 前者是类，封装了后者，前者必须先定义，再调用对象
@@ -117,10 +121,10 @@ pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因�
 *`OrderedDict`为有序`dict`类，可以通过下标访问，但不可迭代，但和`dict`一样都可以通过`items()`方法转化为可迭代的`dict_items`类，进行for循环访问*
 
 `net.state_dict()`返回全网络的`OrderedDict` 下标`weight` `bias`等  
-`net[n].state_dict()`返回第n层的全网络的`OrderedDict` 下标`n.weight``n.bias`等
 
 **当网络类别是`nn.Sequential`类别时候，可以使用如下方式访问**  
 `net[n]`为第n层的`nn.module`类的网络，包括`linear` `relu`  
+`net[n].state_dict()`返回第n层的全网络的`OrderedDict` 下标`n.weight` `n.bias`等
 `net[n].bias/weight`返回该层的`nn.parameter.Parameter`  
 `net[n].bias/weight.data`进一步返回`tensor`值
 
@@ -176,3 +180,21 @@ $$n/s$$
 ```
 
 这样类中定义的不建议访问的私有属性`_token_freqs`就变成了`token_freqs`，后者可以正常访问，但是却无法修改，这样就起到了保护的作用。  
+
+**collections.Counter**
+高性能容量数据类型，类似字典，但是`value`是对应`key`的数量。
+访问：通过`key`值索引数量  
+创建：可以创建一个空的`Counter`之后,在空的`Counter`上进行一些操作。  
+也可以创建的时候传进去一个**迭代器（数组，字符串，字典等）**
+
+```python
+c = Counter(['red','red','blue','blue'])# 传进数组
+c = Counter({'red': 4, 'blue': 2})      # 传进字典
+c = Counter(cats=4, dogs=8)             # 传进元组
+```
+
+### 8.5 rnn-scratch
+
+**高维矩阵的乘法**
+最后2个维度按照2维矩阵乘法法则，其他维度保持不变。  
+eg. [N,A,B]*[N,B,C]=[N,A,C]
