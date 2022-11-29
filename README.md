@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-28 11:35:16
+ * @LastEditTime: 2022-11-29 21:24:10
  * @Description: 
  * 
 -->
@@ -131,12 +131,14 @@ pytorch的`linear`层在进行矩阵乘法的时候把权重进行了转置,因�
 ### 6.3 padding and strides
 
 **卷积计算**  
-图像尺寸 $n$ 卷积核尺寸 $k$ 填充 $p$ 步幅为 $s$ 输出形状为
-$$\lfloor(n-k+p+s)/s\rfloor$$
+图像尺寸 $n$ 卷积核尺寸 $k$ 填充 $p$ 步幅为 $s$ 输出形状为  
+>$\lfloor(n-k+p+s)/s\rfloor$  
+
 如果我们设置了$p=h-1$则输出形状将简化为
-$$\lfloor(n+s-1)/s\rfloor$$
+>$\lfloor(n+s-1)/s\rfloor$
+
 更进一步，如果输入的高度和宽度可以被垂直和水平步幅整除，则输出形状将为
-$$n/s$$
+>$n/s$
 
 ### 6.4
 
@@ -161,7 +163,7 @@ $$n/s$$
 
 **卷积层**  
 应用在卷积层后和激活函数之间。  
-注意，每个对于m个样本，对每个输出通道的m\*p\*q个元素上执行BN。因为每个输出通道对应一组卷积核参数。
+注意，每个对于m个样本，对每个输出通道的m\*p\*q个元素上执行BN。因为每个输出通道对应一组卷积核参数。(把每个输出通道类比成全连接层的一个特征元素，那么每一个输出通道对应的卷积核参数也类比成一个参数)
 
 **广播机制**
 在多于2维的张量上做广播，广播的向量需要保持维度。
@@ -193,8 +195,53 @@ c = Counter({'red': 4, 'blue': 2})      # 传进字典
 c = Counter(cats=4, dogs=8)             # 传进元组
 ```
 
+### 8.4 rnn
+
+**困惑度**
+e^交叉熵平均值，
+xt取决于x1...xt-1，因此交叉熵表示为-log(P(xt|x1...xt-1));  
+类似图像中-log(P(y|x)),此处的x表示输入图像，y表示图像类别的真值
+
 ### 8.5 rnn-scratch
 
 **高维矩阵的乘法**
 最后2个维度按照2维矩阵乘法法则，其他维度保持不变。  
 eg. [N,A,B]*[N,B,C]=[N,A,C]
+
+### 9.1 GRU
+
+**重置门（reset）更新门（update）**  
+
+>$
+\begin{aligned}
+\mathbf{R}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r),\\
+\mathbf{Z}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z),
+\end{aligned}
+$
+
+**候选隐状态（candidate hidden state）**  
+>$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h),$
+
+**隐状态**
+>$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t.$
+
+### 9.1 LSTM
+
+**输入门（input） 遗忘门（forget） 输出门（output）**
+
+>$
+\begin{aligned}
+\mathbf{I}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
+\mathbf{F}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
+\mathbf{O}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xo} + \mathbf{H}_{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
+\end{aligned}
+$
+
+**候选记忆元（candidate memory cell）**
+>$\tilde{\mathbf{C}}_t = \text{tanh}(\mathbf{X}_t \mathbf{W}_{xc} + \mathbf{H}_{t-1} \mathbf{W}_{hc} + \mathbf{b}_c),$
+
+**记忆元**
+>$\mathbf{C}_t = \mathbf{F}_t \odot \mathbf{C}_{t-1} + \mathbf{I}_t \odot \tilde{\mathbf{C}}_t.$
+
+**隐状态**
+>$\mathbf{H}_t = \mathbf{O}_t \odot \tanh(\mathbf{C}_t).$
