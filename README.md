@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-11-29 21:24:10
+ * @LastEditTime: 2022-12-02 21:14:49
  * @Description: 
  * 
 -->
@@ -91,7 +91,7 @@
 
 ### 4.6
 
-`nn.CrossEntropyLoss(reduction='none')``reduction='none'`表示不取平均了,默认会取minibacth平均，（n,1）->(1,1)
+`nn.CrossEntropyLoss(reduction='none')` `reduction='none'`表示不取平均了,默认会取minibacth平均，（n,1）->(1,1)
 
 ### 4.8
 
@@ -245,3 +245,26 @@ $
 
 **隐状态**
 >$\mathbf{H}_t = \mathbf{O}_t \odot \tanh(\mathbf{C}_t).$
+
+### 9.7 seq2seq
+
+**nn.RNN的返回值**  
+`nn.GRU` `nn.RNN` `nn.LSTM`的返回值为`(output(每步的最后一层H),state(最后一步的所有层H))`大小分别为
+1. output的形状:(num_steps,batch_size,num_hiddens)
+2. state的形状:(num_layers,batch_size,num_hiddens)
+
+**`tensor.permute()`**
+张量维度位置置换
+
+```python
+X.permute(1, 0, 2)#01维度交换
+```
+
+**tensor.repeat()**
+按维度复制，参数的个数，不能少于被操作的张量的维度的个数
+
+```python
+>>> a = torch.randn(4, 5)
+>>> a.repeat(1,1,2,3).size()#参数的位置对应维度，大于维度的参数数量，从前面开始增加扩展新维度
+torch.Size([1, 1, 8, 15])
+```
