@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-02 21:16:07
+ * @LastEditTime: 2022-12-02 21:20:46
  * @Description: 
  * 
 -->
@@ -212,18 +212,14 @@ eg. [N,A,B]*[N,B,C]=[N,A,C]
 
 **重置门（reset）更新门（update）**  
 
->$
-\begin{aligned}
-\mathbf{R}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r),\\
-\mathbf{Z}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z),
-\end{aligned}
-$
+>$\mathbf{R}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r)$  
+$\mathbf{Z}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z)$
 
 **候选隐状态（candidate hidden state）**  
->$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h),$
+>$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h)$
 
 **隐状态**
->$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t.$
+>$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t$
 
 ## 9.1 LSTM
 
@@ -250,6 +246,7 @@ $
 
 **nn.RNN的返回值**  
 `nn.GRU` `nn.RNN` `nn.LSTM`的返回值为`(output(每步的最后一层H),state(最后一步的所有层H))`大小分别为
+
 1. output的形状:(num_steps,batch_size,num_hiddens)
 2. state的形状:(num_layers,batch_size,num_hiddens)
 
