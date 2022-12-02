@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-02 21:20:46
+ * @LastEditTime: 2022-12-02 21:27:25
  * @Description: 
  * 
 -->
@@ -212,8 +212,8 @@ eg. [N,A,B]*[N,B,C]=[N,A,C]
 
 **重置门（reset）更新门（update）**  
 
->$\mathbf{R}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r)$  
-$\mathbf{Z}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z)$
+>$\mathbf{R}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r)$  
+$\mathbf{Z}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z)$
 
 **候选隐状态（candidate hidden state）**  
 >$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h)$
@@ -227,9 +227,9 @@ $\mathbf{Z}_t = \sigma(\mathbf{X}*t \mathbf{W}*{xz} + \mathbf{H}_{t-1} \mathbf{W
 
 >$
 \begin{aligned}
-\mathbf{I}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
-\mathbf{F}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
-\mathbf{O}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xo} + \mathbf{H}_{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
+\mathbf{I}_t &= \sigma(\mathbf{X}_t \mathbf{W}_{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
+\mathbf{F}_t &= \sigma(\mathbf{X}_t \mathbf{W}_{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
+\mathbf{O}_t &= \sigma(\mathbf{X}_t \mathbf{W}*_{xo} + \mathbf{H}_{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
 \end{aligned}
 $
 
