@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-03 21:02:14
+ * @LastEditTime: 2022-12-05 00:38:03
  * @Description: 
  * 
 -->
@@ -247,7 +247,7 @@ $\mathbf{Z}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xz} + \mathbf{H}_{t-1} \mathbf{W
 \begin{aligned}
 \mathbf{I}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
 \mathbf{F}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
-\mathbf{O}_t &= \sigma(\mathbf{X}*t \mathbf{W}**{xo} + \mathbf{H}_{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
+\mathbf{O}*t &= \sigma(\mathbf{X}*t \mathbf{W}**{xo} + \mathbf{H}*{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
 \end{aligned}
 $
 
@@ -300,3 +300,28 @@ torch.Size([1, 1, 8, 15])
 **数组索引**
 数组索引时`True` `False`表示对应位置的数是否保留；数字表示索引哪个位置的数  
 所以不能用01代替`bool`
+
+## 10.4 bahdanau-attention
+
+**有无attention的seq2seq差异**
+
+1. **普通seq2seq模型**，每次时间步的输入是12最后-1维度的`cat`  
+   训练时，翻译结果的词元直接喂入；预测时，第一个step喂入`<bos>`
+   1. `embed_size`  嵌入层输出的词元特征向量
+   2. `num_hiddens` 固定的Context：encoder最后step最终层
+2. **加入atten的seq2seq模型**，每次时间步的输入12最后-1维度的`cat`  
+   训练时，翻译结果的词元直接喂入；预测时，第一个step喂入`<bos>`
+   1. `embed_size` 嵌入层输出的词元特征向量
+   2. `num_hiddens` 变化的Context：注意力集中的输出，encoder在所有step的最终层隐状态，将作为注意力的key和value。查询q初始化为encoder最后step最终层，后续为上一个step的最终层隐状态。
+
+## 10.5 multihead-attention
+
+**并行计算**  
+pq\*h=pk\*h=pv\*h=num_hiddens=p0  
+原理来说应该设置h个单元数为p的linear，但是一个单元数为h*p的linear效果相同  
+由于后续要采用缩放点积，因此pq=pk  
+虽然pk=pv，但这不是必须的，只要满足key-value一对一即可  
+
+并行多头注意力输出，把num_heads合并到batch_size维度，即0维度，且相邻batch的不同head，特征维度变成num_hiddens/h。即把不同的head当成了batch。
+
+最后linear层计算输出时，先把多头注意力的输出在特征维度拼接，特征维度回到num_hiddens，再传入linear层。
