@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-05 11:10:16
+ * @LastEditTime: 2022-12-05 11:20:43
  * @Description: 
  * 
 -->
@@ -312,7 +312,7 @@ torch.Size([1, 1, 8, 15])
 2. **加入atten的seq2seq模型**，每次时间步的输入12最后-1维度的`cat`  
    训练时，翻译结果的词元直接喂入；预测时，第一个step喂入`<bos>`
    1. `embed_size` 嵌入层输出的词元特征向量
-   2. `num_hiddens` 变化的Context：注意力集中的输出，encoder在所有step的最终层隐状态，将作为注意力的key和value。查询q初始化为encoder最后step最终层，后续为上一个step的最终层隐状态。
+   2. `num_hiddens` 变化的Context：注意力集中的输出，encoder在所有step的最终层隐状态，将同时作为注意力的key和value。查询q初始化为encoder最后step最终层，后续为上一个step的最终层隐状态。
 
 ## 10.5 multihead-attention
 
