@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-05 11:08:41
+ * @LastEditTime: 2022-12-05 11:10:16
  * @Description: 
  * 
 -->
@@ -325,4 +325,4 @@ pq\*h=pk\*h=pv\*h=num_hiddens=p0
 并行多头注意力输出，把num_heads合并到batch_size维度，即0维度，且相邻batch的不同head，特征维度变成num_hiddens/h。即把不同的head当成了batch。
 
 最后linear层计算输出时，先把多头注意力的输出在特征维度拼接，特征维度回到num_hiddens，再传入linear层。
-![img](img_thc\10.5.png)
+![img](img_thc/10.5.png)
