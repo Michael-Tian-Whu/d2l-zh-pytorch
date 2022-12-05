@@ -1,7 +1,7 @@
 <!--
  * @Author: WHURS-THC
  * @Date: 2022-10-27 10:42:59
- * @LastEditTime: 2022-12-05 00:38:03
+ * @LastEditTime: 2022-12-05 11:08:41
  * @Description: 
  * 
 -->
@@ -111,7 +111,7 @@ kwargs 是 keyword arguments 的缩写，表示关键字参数
 
 ## 4.8
 
-**方差**
+**方差**  
 >定义公式 $Var\left( X \right) =E\left( \left( X-E\left( X \right) \right) ^2 \right) =E\left( X^2 \right) -E\left( X \right) ^2$  
 
 >计算公式 $Var\left( X \right) =\int{f_X\left( x \right) \left( X-E\left( X \right) \right) ^2dx}$
@@ -236,28 +236,28 @@ $\mathbf{Z}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xz} + \mathbf{H}_{t-1} \mathbf{W
 **候选隐状态（candidate hidden state）**  
 >$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h)$
 
-**隐状态**
+**隐状态**  
 >$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t$
 
 ## 9.1 LSTM
 
-**输入门（input） 遗忘门（forget） 输出门（output）**
+**输入门（input） 遗忘门（forget） 输出门（output）**   
 
 >$
 \begin{aligned}
-\mathbf{I}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
-\mathbf{F}_t &= \sigma(\mathbf{X}*t \mathbf{W}*{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
-\mathbf{O}*t &= \sigma(\mathbf{X}*t \mathbf{W}**{xo} + \mathbf{H}*{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
+\mathbf{I}_t &= \sigma(\mathbf{X}_t \mathbf{W}_{xi} + \mathbf{H}_{t-1} \mathbf{W}_{hi} + \mathbf{b}_i),\\
+\mathbf{F}_t &= \sigma(\mathbf{X}_t \mathbf{W}_{xf} + \mathbf{H}_{t-1} \mathbf{W}_{hf} + \mathbf{b}_f),\\
+\mathbf{O}_t &= \sigma(\mathbf{X}_t \mathbf{W}_{xo} + \mathbf{H}_{t-1} \mathbf{W}_{ho} + \mathbf{b}_o),
 \end{aligned}
 $
 
-**候选记忆元（candidate memory cell）**
+**候选记忆元（candidate memory cell）**  
 >$\tilde{\mathbf{C}}_t = \text{tanh}(\mathbf{X}_t \mathbf{W}_{xc} + \mathbf{H}_{t-1} \mathbf{W}_{hc} + \mathbf{b}_c),$
 
-**记忆元**
+**记忆元**  
 >$\mathbf{C}_t = \mathbf{F}_t \odot \mathbf{C}_{t-1} + \mathbf{I}_t \odot \tilde{\mathbf{C}}_t.$
 
-**隐状态**
+**隐状态**  
 >$\mathbf{H}_t = \mathbf{O}_t \odot \tanh(\mathbf{C}_t).$
 
 ## 9.6 encoder-decoder
@@ -325,3 +325,4 @@ pq\*h=pk\*h=pv\*h=num_hiddens=p0
 并行多头注意力输出，把num_heads合并到batch_size维度，即0维度，且相邻batch的不同head，特征维度变成num_hiddens/h。即把不同的head当成了batch。
 
 最后linear层计算输出时，先把多头注意力的输出在特征维度拼接，特征维度回到num_hiddens，再传入linear层。
+![img](img_thc\10.5.png)
